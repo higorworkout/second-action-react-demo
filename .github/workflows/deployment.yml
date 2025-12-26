@@ -1,6 +1,6 @@
 # This is a basic second workflow to help you get started with Actions
 
-name: Test Project
+name: Deploy Project
 # Controls when the workflow will run
 on: push
 jobs:
@@ -20,3 +20,22 @@ jobs:
       
       - name: Run tests
         run: npm test
+
+  deploy: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v3
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy
+        run: echo "Deploying ..."
